@@ -2,9 +2,8 @@ package com.project.carrental.presentation.customer
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.carrental.R
@@ -16,24 +15,25 @@ import dagger.hilt.android.AndroidEntryPoint
 class CustomerMainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainCustomerBinding
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainCustomerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupBottomNavigation()
 
-        val navView: BottomNavigationView = binding.navView
+    }
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+    private fun setupBottomNavigation() {
+        bottomNavigationView = binding.bottomNav
+        bottomNavigationView.itemIconTintList = null
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_home_container) as NavHostFragment
+        navController = navHostFragment.navController
+
+        bottomNavigationView.setupWithNavController(navController)
     }
 }
