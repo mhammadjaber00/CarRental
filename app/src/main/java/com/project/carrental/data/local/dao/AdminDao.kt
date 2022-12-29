@@ -1,18 +1,17 @@
 package com.project.carrental.data.local.dao
 
 import androidx.room.*
-import com.project.carrental.data.local.models.Car
-import com.project.carrental.data.local.models.User
+import com.project.carrental.data.local.models.Admin
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface UserDao {
+interface AdminDao {
 
     @Query("SELECT * FROM user")
-    fun getUser(): Flow<User>
+    fun getUser(): Flow<Admin>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateUser(user: User)
+    suspend fun updateUser(admin: Admin)
 
     @Query("DELETE FROM user")
     suspend fun deleteAllUser()
