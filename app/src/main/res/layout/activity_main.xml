@@ -13,7 +13,7 @@
         app:layout_collapseMode="pin"
         app:title="Begin Your Rental Adventure!"
         app:titleCentered="true"
-        app:titleTextAppearance="@style/TextAppearance.Material3.ActionBar.Title"
+        app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         android:textAlignment="center"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
