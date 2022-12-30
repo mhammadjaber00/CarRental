@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_available_cars">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_available_cars"
         android:name="com.project.carrental.presentation.customer.home.AvailableCarsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_available_cars" />
