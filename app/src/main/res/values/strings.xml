@@ -11,4 +11,8 @@
     <string name="car_name">Car Name</string>
     <string name="save">Save</string>
     <string name="car_color">Car Color</string>
+    <string name="sign_in_required">Sign In Required</string>
+    <string name="please_sign_in_or_create_an_account_before_requesting_a_flight">Please sign in or create an account before requesting a flight.</string>
+    <string name="username">Username</string>
+    <string name="sign_in">Sign In</string>
 </resources>

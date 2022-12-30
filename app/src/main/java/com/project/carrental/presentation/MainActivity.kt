@@ -20,11 +20,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val intent = Intent(this, LoginActivity::class.java)
         binding.btnCustomer.setOnClickListener {
-            startActivity(Intent(this, CustomerMainActivity::class.java))
+            intent.putExtra("isAdmin", false)
+            startActivity(intent)
         }
         binding.btnAdmin.setOnClickListener {
-            startActivity(Intent(this, AdminMainActivity::class.java))
+            intent.putExtra("isAdmin", true)
+            startActivity(intent)
         }
     }
 }
