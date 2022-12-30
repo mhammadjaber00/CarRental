@@ -29,9 +29,10 @@ class CarAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(car: Car, type: Int) {
             with(binding) {
+                val priceText = car.price.toString() + context.getString(R.string.per_day)
                 when (type) {
+
                     0 -> {
-                        val priceText = car.price.toString() + context.getString(R.string.per_day)
                         ivCar.setImageURI(Uri.parse(car.image))
                         tvCarColor.text = car.color
                         tvCarModel.text = car.name
@@ -47,7 +48,8 @@ class CarAdapter(
                         tvDate.visibility = View.GONE
                         tvReturnDate.visibility = View.GONE
                         tvCarModel.text = car.name
-//                        tv.text = car.price.toString()
+                        tvCarColor.text = car.color
+                        tvPrice.text = priceText
                         val parseUri = car.image?.let { Uri.parse(it) }
                         ivCar.setImageURI(parseUri)
 
