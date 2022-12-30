@@ -2,6 +2,8 @@ package com.project.carrental.presentation.admin.cardetails
 
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +53,7 @@ class CarDetailsFragment : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate (savedInstanceState)
         setUpListeners()
         fillData()
         handleUiState()
@@ -59,14 +61,59 @@ class CarDetailsFragment : Fragment() {
 
     private fun fillData() {
         with(binding) {
-            car.value = Car(
-                id = 0,
-                etCarNameInput.text.toString(),
-                etCarPriceInput.text.toString().toInt(),
-                etCarColorInput.text.toString(),
-                result.value.toString(),
-                isRented = false
-            )
+            car.value = Car(null, "", 0, "", "", false, null, null)
+            etCarNameInput.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    car.value?.name = s.toString()
+
+                }
+            })
+            etCarPriceInput.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    car.value?.price = s.toString().toInt()
+
+                }
+            })
+            etCarColorInput.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    car.value?.color = s.toString()
+                }
+            })
+            car.value?.image = result.value.toString()
         }
     }
 
@@ -77,8 +124,10 @@ class CarDetailsFragment : Fragment() {
             }
             btnSave.setOnClickListener {
                 viewModel.viewModelScope.launch {
-                    if (validateFields()) car.value?.let { it1 -> viewModel.updateCar(it1) }
-                    else Toast.makeText(
+                    if (validateFields()) {
+                        Toast.makeText(requireContext(), "car saved", Toast.LENGTH_SHORT).show()
+                        car.value?.let { it1 -> viewModel.updateCar(it1) }
+                    } else Toast.makeText(
                         requireContext(), "Please fill the empty fields", Toast.LENGTH_SHORT
                     ).show()
                 }
