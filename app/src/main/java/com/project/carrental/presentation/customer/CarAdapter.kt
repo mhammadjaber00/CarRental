@@ -38,7 +38,8 @@ class CarAdapter(
                         ivCar.setImageURI(car.image.toUri())
                         tvCarColor.text = car.color
                         tvDate.text = car.startDate
-                        tvReturnDate.text = if (!car.endDate.isNullOrEmpty()) "until ${car.endDate}" else ""
+                        tvReturnDate.text =
+                            if (!car.endDate.isNullOrEmpty()) "until ${car.endDate}" else ""
                         tvCarModel.text = car.name
                         tvPrice.text = priceText
                         btnRent.isEnabled = !car.isRented
@@ -46,11 +47,18 @@ class CarAdapter(
                             if (car.isRented) context.getString(R.string.unavailable) else context.getString(
                                 R.string.available
                             )
+                        tvStatus.setTextColor(
+                            context.getColor(
+                                if (car.isRented) R.color.red
+                                else R.color.green
+                            )
+                        )
                     }
                     1 -> {
                         btnRent.visibility = View.GONE
                         tvDate.text = car.startDate
-                        tvReturnDate.text = if (!car.endDate.isNullOrEmpty()) "until ${car.endDate}" else ""
+                        tvReturnDate.text =
+                            if (!car.endDate.isNullOrEmpty()) "until ${car.endDate}" else ""
                         tvCarModel.text = car.name
                         tvCarColor.text = car.color
                         tvStatus.visibility = View.GONE

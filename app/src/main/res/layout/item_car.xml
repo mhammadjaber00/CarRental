@@ -115,7 +115,7 @@
             android:layout_marginStart="9dp"
             android:layout_marginBottom="16dp"
             android:lineSpacingExtra="3sp"
-            android:textColor="#02b40f"
+            android:textColor="@color/green"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
