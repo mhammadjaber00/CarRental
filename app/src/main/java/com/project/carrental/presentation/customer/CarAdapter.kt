@@ -27,9 +27,15 @@ class CarAdapter(
         fun bind(car: Car,type: Int) {
             with(binding) {
                 when(type) {
-                    0 -> {}
-                    1 -> {}
-                    2 -> {}
+                    0 -> {
+
+                    }
+                    1 -> {
+
+                    }
+                    2 -> {
+
+                    }
                 }
             }
         }
