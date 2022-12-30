@@ -41,18 +41,18 @@ class CarAdapter(
                                 R.string.available
                             )
                     }
-                }
-                1 -> {}
-                2 -> {
-                btnRent.visibility = View.GONE
-                tvDate.visibility = View.GONE
-                tvReturnDate.visibility = View.GONE
-                tvCarModel.text = car.name
+                    1 -> {}
+                    2 -> {
+                        btnRent.visibility = View.GONE
+                        tvDate.visibility = View.GONE
+                        tvReturnDate.visibility = View.GONE
+                        tvCarModel.text = car.name
 //                        tv.text = car.price.toString()
-                val parseUri = car.image?.let { Uri.parse(it) }
-                ivCar.setImageURI(parseUri)
+                        val parseUri = car.image?.let { Uri.parse(it) }
+                        ivCar.setImageURI(parseUri)
 
-            }
+                    }
+                }
             }
         }
     }
