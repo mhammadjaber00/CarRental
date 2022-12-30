@@ -5,4 +5,10 @@
     <string name="title_notifications">Notifications</string>
     <string name="admin">Admin</string>
     <string name="customer">Customer</string>
+    <string name="please_add_the_required_information_about_your_car">Please add the required information about your car.</string>
+    <string name="car_details">Car Details</string>
+    <string name="car_price">Car Price</string>
+    <string name="car_name">Car Name</string>
+    <string name="save">Save</string>
+    <string name="car_color">Car Color</string>
 </resources>

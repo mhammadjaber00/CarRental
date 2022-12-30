@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface AdminDao {
 
     @Query("SELECT * FROM user")
-    fun getUser(): Flow<Admin>
+    fun getAdmin(): Flow<Admin>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateUser(admin: Admin)

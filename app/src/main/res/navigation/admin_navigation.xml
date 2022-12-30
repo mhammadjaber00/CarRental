@@ -2,24 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    android:id="@+id/admin_navigation"
+    app:startDestination="@+id/add_car_navigation">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.project.carrental.presentation.customer.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/add_car_navigation"
+        android:name="com.project.carrental.presentation.admin.cardetails.CarDetailsFragment"
+        android:label="fragment_add_car"
+        tools:layout="@layout/fragment_add_car" />
 
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.project.carrental.presentation.customer.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.project.carrental.presentation.customer.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>
