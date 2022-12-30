@@ -10,4 +10,10 @@
         android:name="com.project.carrental.presentation.admin.cardetails.CarDetailsFragment"
         android:label="fragment_add_car"
         tools:layout="@layout/fragment_add_car" />
+
+    <fragment
+        android:id="@+id/my_cars_navigation"
+        android:name="com.project.carrental.presentation.admin.mycars.AdminCarsFragment"
+        android:label="fragment_my_cars"
+        tools:layout="@layout/fragment_admin_cars" />
 </navigation>

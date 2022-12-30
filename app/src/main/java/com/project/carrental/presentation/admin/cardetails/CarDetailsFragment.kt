@@ -53,7 +53,7 @@ class CarDetailsFragment : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate (savedInstanceState)
+        super.onCreate(savedInstanceState)
         setUpListeners()
         fillData()
         handleUiState()
@@ -75,7 +75,12 @@ class CarDetailsFragment : Fragment() {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    car.value?.name = s.toString()
+                    try {
+                        car.value?.name = s.toString()
+                    } catch (e: Exception) {
+                        car.value?.name = ""
+                        Log.d("CarDetailsFragment", "Error: ${e.message}")
+                    }
 
                 }
             })
@@ -92,8 +97,11 @@ class CarDetailsFragment : Fragment() {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    car.value?.price = s.toString().toInt()
-
+                    try {
+                        car.value?.price = s.toString().toInt()
+                    } catch (e: NumberFormatException) {
+                        car.value?.price = 0
+                    }
                 }
             })
             etCarColorInput.addTextChangedListener(object : TextWatcher {
@@ -110,7 +118,11 @@ class CarDetailsFragment : Fragment() {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    car.value?.color = s.toString()
+                    try {
+                        car.value?.color = s.toString()
+                    } catch (e: NumberFormatException) {
+                        car.value?.color = ""
+                    }
                 }
             })
             car.value?.image = result.value.toString()
@@ -137,23 +149,35 @@ class CarDetailsFragment : Fragment() {
 
     private fun handleUiState() {
         with(binding) {
-            when (viewModel.carDetailsState.value) {
-                is CarDetailsViewModel.UIEvent.Loading -> {
-                    progressBar.visibility = View.VISIBLE
-                }
-                is CarDetailsViewModel.UIEvent.Success -> {
-                    progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Car updated successfully", Toast.LENGTH_SHORT)
-                        .show()
-                }
-                is CarDetailsViewModel.UIEvent.Error -> {
-                    progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Error updating car", Toast.LENGTH_SHORT)
-                        .show()
-                }
-                else -> {}
-            }
+            viewModel.viewModelScope.launch {
+                viewModel.carDetailsState.collect {
+                    when (it) {
+                        is CarDetailsViewModel.UIEvent.Loading -> {
+                            progressBar.visibility = View.VISIBLE
+                        }
+                        is CarDetailsViewModel.UIEvent.Success -> {
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                requireContext(),
+                                "Car updated successfully",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                        is CarDetailsViewModel.UIEvent.Error -> {
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(
+                                requireContext(),
+                                "Error updating car",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                        else -> {}
+                    }
 
+                }
+            }
         }
     }
 
@@ -174,6 +198,13 @@ class CarDetailsFragment : Fragment() {
                 }
                 else -> true
             }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        with(binding) {
+
         }
     }
 }

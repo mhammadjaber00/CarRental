@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.domain.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class AdminCarsViewModel @Inject constructor(
     }
 
     fun getCars() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = UIState.Loading(true)
             _uiState.value = UIState.Success(mainRepository.getCar())
         }

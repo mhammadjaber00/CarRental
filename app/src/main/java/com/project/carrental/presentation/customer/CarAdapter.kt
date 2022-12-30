@@ -2,7 +2,9 @@ package com.project.carrental.presentation.customer
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.carrental.data.local.models.Car
@@ -10,9 +12,9 @@ import com.project.carrental.databinding.ItemCarBinding
 
 class CarAdapter(
     private var type: Int,
-    private var carList: List<Car>,
     private val onRentNowClicked: (car: Car?) -> Unit = {}
 ) : RecyclerView.Adapter<CarAdapter.CarViewHolder>() {
+    private var carList = listOf<Car>()
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(items: List<Car>) {
@@ -24,12 +26,21 @@ class CarAdapter(
         val binding: ItemCarBinding,
         var context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(car: Car,type: Int) {
+        fun bind(car: Car, type: Int) {
             with(binding) {
-                when(type) {
+                when (type) {
                     0 -> {}
                     1 -> {}
-                    2 -> {}
+                    2 -> {
+                        btnRent.visibility = View.GONE
+                        tvDate.visibility = View.GONE
+                        tvReturnDate.visibility = View.GONE
+                        tvCarModel.text = car.name
+//                        tv.text = car.price.toString()
+                        val parseUri = car.image?.let { Uri.parse(it) }
+                        ivCar.setImageURI(parseUri)
+
+                    }
                 }
             }
         }
