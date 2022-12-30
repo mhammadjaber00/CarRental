@@ -7,19 +7,14 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.project.carrental.presentation.customer.home.HomeFragment"
+        android:name="com.project.carrental.presentation.customer.home.AvailableCarsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_available_cars" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.project.carrental.presentation.customer.dashboard.DashboardFragment"
+        android:id="@+id/navigation_my_cars"
+        android:name="com.project.carrental.presentation.customer.mycars.MyCarsFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_my_cars" />
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.project.carrental.presentation.customer.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>
