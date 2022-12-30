@@ -100,7 +100,8 @@ class CarDetailsFragment : Fragment() {
                     try {
                         car.value?.price = s.toString().toDouble()
                     } catch (e: NumberFormatException) {
-                        car.value?.price = 0.0                    }
+                        car.value?.price = 0.0
+                    }
                 }
             })
             etCarColorInput.addTextChangedListener(object : TextWatcher {
@@ -162,6 +163,7 @@ class CarDetailsFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
+                            clearFields()
                         }
                         is CarDetailsViewModel.UIEvent.Error -> {
                             progressBar.visibility = View.GONE
@@ -179,6 +181,17 @@ class CarDetailsFragment : Fragment() {
             }
         }
     }
+
+    private fun clearFields() {
+        with(binding) {
+            etCarNameInput.setText("")
+            etCarPriceInput.setText("")
+            etCarColorInput.setText("")
+            ivCarImage.setImageURI(Uri.EMPTY)
+        }
+    }
+
+
 
     private fun validateFields(): Boolean {
         with(binding) {
