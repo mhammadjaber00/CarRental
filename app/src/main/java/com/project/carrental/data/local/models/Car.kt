@@ -12,6 +12,6 @@ data class Car(
     @ColumnInfo var image: String,
     @ColumnInfo var color: String,
     @ColumnInfo var isRented: Boolean,
-    @ColumnInfo var startDate: String? = null,
-    @ColumnInfo var endDate: String? = null
+    @ColumnInfo var startDate: String? = "",
+    @ColumnInfo var endDate: String? = ""
 )

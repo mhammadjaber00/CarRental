@@ -17,9 +17,11 @@
         app:title="My Cars" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_my_cars"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_car"
         app:layout_constraintTop_toBottomOf="@id/mtb_my_trips"
         app:layout_constraintBottom_toBottomOf="parent"/>

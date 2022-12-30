@@ -1,7 +1,5 @@
-package com.project.carrental.presentation.customer.mycars
+package com.project.carrental.presentation.customer.availablecars
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
@@ -13,13 +11,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyCarsViewModel @Inject constructor(private val mainRepository: MainRepository) :
+class AvailableCarsViewModel @Inject constructor(private val mainRepository: MainRepository) :
     ViewModel() {
 
     sealed class UIEvent {
         object Nothing : UIEvent()
         object Loading : UIEvent()
         data class Success(val carList: List<Car>) : UIEvent()
+        data class Edit(val car: Car) : UIEvent()
         data class Error(val message: String) : UIEvent()
     }
 
@@ -27,6 +26,9 @@ class MyCarsViewModel @Inject constructor(private val mainRepository: MainReposi
         MutableStateFlow<UIEvent>(UIEvent.Nothing)
 
     val availableCars = _availableCarsState
+
+    private val _updateCarState =
+        MutableStateFlow<UIEvent>(UIEvent.Nothing)
 
     suspend fun fetchCars() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -39,4 +41,24 @@ class MyCarsViewModel @Inject constructor(private val mainRepository: MainReposi
             }
         }
     }
+
+    suspend fun updateCar(car: Car, startDate:String, endDate: String) {
+        _updateCarState.value = UIEvent.Loading
+        try {
+            mainRepository.insertCar(Car(
+                car.id,
+                car.name,
+                car.price,
+                car.image,
+                car.color,
+                isRented = true,
+                startDate = startDate,
+                endDate = endDate
+            ))
+            _updateCarState.value = UIEvent.Edit(car)
+        } catch (e: Exception) {
+            _updateCarState.value = UIEvent.Error(e.message ?: "Error")
+        }
+    }
+
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.customer.home.AvailableCarsFragment">
+    tools:context=".presentation.customer.availablecars.AvailableCarsFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mtb_my_trips"
@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_car"
         app:layout_constraintTop_toBottomOf="@id/mtb_my_trips"
         app:layout_constraintBottom_toBottomOf="parent"/>

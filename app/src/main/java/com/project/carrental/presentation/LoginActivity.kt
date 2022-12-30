@@ -1,14 +1,11 @@
 package com.project.carrental.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.project.carrental.R
+import androidx.appcompat.app.AppCompatActivity
 import com.project.carrental.databinding.ActivityLoginBinding
-import com.project.carrental.databinding.ActivityMainBinding
 import com.project.carrental.presentation.admin.AdminMainActivity
 import com.project.carrental.presentation.customer.CustomerMainActivity
-import kotlin.properties.Delegates
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -24,8 +21,7 @@ class LoginActivity : AppCompatActivity() {
             if (isAdmin) {
                 startActivity(Intent(this, AdminMainActivity::class.java))
                 finishAffinity()
-            }
-            else {
+            } else {
                 startActivity(Intent(this, CustomerMainActivity::class.java))
                 finishAffinity()
             }

@@ -13,8 +13,7 @@ import com.project.carrental.data.local.models.Customer
 @Database(
     entities = [Admin::class, Customer::class, Car::class],
     version = 1,
-    exportSchema = true,
-    autoMigrations = []
+    exportSchema = false
 )
 
 @TypeConverters(Converters::class)

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_available_cars"
-        android:name="com.project.carrental.presentation.customer.home.AvailableCarsFragment"
+        android:name="com.project.carrental.presentation.customer.availablecars.AvailableCarsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_available_cars" />
 

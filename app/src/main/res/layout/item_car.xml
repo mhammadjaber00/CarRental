@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:lineSpacingExtra="3sp"
-            android:textColor="@color/material_dynamic_primary70"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="20dp"

@@ -1,5 +1,6 @@
 package com.project.carrental.presentation.admin.cardetails
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
@@ -29,7 +31,7 @@ class CarDetailsFragment : Fragment() {
 
     private val viewModel: CarDetailsViewModel by viewModels()
     private val car = MutableStateFlow<Car?>(null)
-    private val result: MutableStateFlow<Uri> = MutableStateFlow(Uri.EMPTY)
+    private val result: MutableStateFlow<String> = MutableStateFlow("")
 
     private val pickMultipleVisualMedia = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -37,8 +39,9 @@ class CarDetailsFragment : Fragment() {
         // Do something with the uris
         if (uris != null) {
             Log.d("PhotoPicker", "Selected URI: $uris")
-            result.value = uris
-            binding.ivCarImage.setImageURI(result.value)
+            context?.contentResolver?.takePersistableUriPermission(uris, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            result.value = uris.toString()
+            binding.ivCarImage.setImageURI(uris)
         } else {
             Log.d("PhotoPicker", "No media selected")
 
@@ -125,7 +128,6 @@ class CarDetailsFragment : Fragment() {
                     }
                 }
             })
-            car.value?.image = result.value.toString()
         }
     }
 
@@ -138,7 +140,21 @@ class CarDetailsFragment : Fragment() {
                 viewModel.viewModelScope.launch {
                     if (validateFields()) {
                         Toast.makeText(requireContext(), "car saved", Toast.LENGTH_SHORT).show()
-                        car.value?.let { it1 -> viewModel.updateCar(it1) }
+                        car.value?.let { car ->
+                            viewModel.updateCar(
+                                Car(
+                                    car.id,
+                                    car.name,
+                                    car.price,
+                                    result.value,
+                                    car.color,
+                                    car.isRented,
+                                    car.startDate,
+                                    car.endDate
+                                )
+                            )
+                            result.value = ""
+                        }
                     } else Toast.makeText(
                         requireContext(), "Please fill the empty fields", Toast.LENGTH_SHORT
                     ).show()
@@ -188,9 +204,9 @@ class CarDetailsFragment : Fragment() {
             etCarPriceInput.setText("")
             etCarColorInput.setText("")
             ivCarImage.setImageURI(Uri.EMPTY)
+            car.value = Car(null, "", 0.0, "", "", false, null, null)
         }
     }
-
 
 
     private fun validateFields(): Boolean {

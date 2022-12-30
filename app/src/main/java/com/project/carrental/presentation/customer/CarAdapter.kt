@@ -6,6 +6,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.project.carrental.R
 import com.project.carrental.data.local.models.Car
@@ -27,22 +28,34 @@ class CarAdapter(
         val binding: ItemCarBinding,
         var context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(car: Car, type: Int) {
             with(binding) {
                 val priceText = car.price.toString() + context.getString(R.string.per_day)
                 when (type) {
 
                     0 -> {
-                        ivCar.setImageURI(Uri.parse(car.image))
+                        ivCar.setImageURI(car.image.toUri())
                         tvCarColor.text = car.color
+                        tvDate.text = car.startDate
+                        tvReturnDate.text = if (!car.endDate.isNullOrEmpty()) "until ${car.endDate}" else ""
                         tvCarModel.text = car.name
                         tvPrice.text = priceText
+                        btnRent.isEnabled = !car.isRented
                         tvStatus.text =
                             if (car.isRented) context.getString(R.string.unavailable) else context.getString(
                                 R.string.available
                             )
                     }
-                    1 -> {}
+                    1 -> {
+                        btnRent.visibility = View.GONE
+                        tvDate.text = car.startDate
+                        tvReturnDate.text = if (!car.endDate.isNullOrEmpty()) "until ${car.endDate}" else ""
+                        tvCarModel.text = car.name
+                        tvCarColor.text = car.color
+                        tvStatus.visibility = View.GONE
+                        ivCar.setImageURI(car.image.toUri())
+                    }
                     2 -> {
                         btnRent.visibility = View.GONE
                         tvDate.visibility = View.GONE
@@ -50,8 +63,7 @@ class CarAdapter(
                         tvCarModel.text = car.name
                         tvCarColor.text = car.color
                         tvPrice.text = priceText
-                        val parseUri = car.image?.let { Uri.parse(it) }
-                        ivCar.setImageURI(parseUri)
+                        ivCar.setImageURI(car.image.toUri())
 
                     }
                 }
