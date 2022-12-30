@@ -1,4 +1,4 @@
-package com.project.carrental.presentation.customer.dashboard
+package com.project.carrental.presentation.customer.mycars
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,10 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor() : ViewModel() {
+class MyCarsViewModel @Inject constructor() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is MyCars Fragment"
     }
     val text: LiveData<String> = _text
 }

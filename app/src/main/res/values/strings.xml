@@ -15,4 +15,7 @@
     <string name="please_sign_in_or_create_an_account_before_requesting_a_flight">Please sign in or create an account before requesting a flight.</string>
     <string name="username">Username</string>
     <string name="sign_in">Sign In</string>
+    <string name="available_cars">Available Cars</string>
+    <string name="my_cars">My Cars</string>
+    <string name="rent_now">Rent Now !</string>
 </resources>
