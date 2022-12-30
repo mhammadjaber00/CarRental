@@ -39,6 +39,7 @@ class AvailableCarsFragment : Fragment() {
 
     private fun setupRecycler() {
         adapter = CarAdapter(0) {}
+        adapter.setData(availableCarsViewModel.carList)
         binding.rvAvailableCars.adapter = adapter
     }
 

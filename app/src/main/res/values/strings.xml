@@ -18,4 +18,7 @@
     <string name="available_cars">Available Cars</string>
     <string name="my_cars">My Cars</string>
     <string name="rent_now">Rent Now !</string>
+    <string name="per_day">"$ per day"</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="available">Available</string>
 </resources>

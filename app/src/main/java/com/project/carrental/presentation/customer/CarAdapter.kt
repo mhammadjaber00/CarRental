@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.project.carrental.R
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.databinding.ItemCarBinding
 
@@ -29,19 +30,29 @@ class CarAdapter(
         fun bind(car: Car, type: Int) {
             with(binding) {
                 when (type) {
-                    0 -> {}
-                    1 -> {}
-                    2 -> {
-                        btnRent.visibility = View.GONE
-                        tvDate.visibility = View.GONE
-                        tvReturnDate.visibility = View.GONE
+                    0 -> {
+                        val priceText = car.price.toString() + context.getString(R.string.per_day)
+                        ivCar.setImageURI(Uri.parse(car.image))
+                        tvCarColor.text = car.color
                         tvCarModel.text = car.name
-//                        tv.text = car.price.toString()
-                        val parseUri = car.image?.let { Uri.parse(it) }
-                        ivCar.setImageURI(parseUri)
-
+                        tvPrice.text = priceText
+                        tvStatus.text =
+                            if (car.isRented) context.getString(R.string.unavailable) else context.getString(
+                                R.string.available
+                            )
                     }
                 }
+                1 -> {}
+                2 -> {
+                btnRent.visibility = View.GONE
+                tvDate.visibility = View.GONE
+                tvReturnDate.visibility = View.GONE
+                tvCarModel.text = car.name
+//                        tv.text = car.price.toString()
+                val parseUri = car.image?.let { Uri.parse(it) }
+                ivCar.setImageURI(parseUri)
+
+            }
             }
         }
     }
