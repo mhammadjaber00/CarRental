@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Car(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     @ColumnInfo var name: String,
-    @ColumnInfo var price: Int,
+    @ColumnInfo var price: Double,
     @ColumnInfo var image: String,
     @ColumnInfo var color: String,
     @ColumnInfo var isRented: Boolean,

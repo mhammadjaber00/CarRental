@@ -61,7 +61,7 @@ class CarDetailsFragment : Fragment() {
 
     private fun fillData() {
         with(binding) {
-            car.value = Car(null, "", 0, "", "", false, null, null)
+            car.value = Car(null, "", 0.0, "", "", false, null, null)
             etCarNameInput.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -98,10 +98,9 @@ class CarDetailsFragment : Fragment() {
 
                 override fun afterTextChanged(s: Editable?) {
                     try {
-                        car.value?.price = s.toString().toInt()
+                        car.value?.price = s.toString().toDouble()
                     } catch (e: NumberFormatException) {
-                        car.value?.price = 0
-                    }
+                        car.value?.price = 0.0                    }
                 }
             })
             etCarColorInput.addTextChangedListener(object : TextWatcher {
