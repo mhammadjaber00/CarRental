@@ -14,9 +14,9 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="64dp"
         android:lineSpacingExtra="6sp"
-        android:textSize="30sp"
-        android:textColor="#161b37"
         android:text="@string/sign_in_required"
+        android:textColor="#161b37"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,8 +28,8 @@
         android:layout_marginTop="35dp"
         android:layout_marginEnd="56dp"
         android:lineSpacingExtra="3sp"
-        android:textSize="16sp"
         android:text="@string/please_sign_in_or_create_an_account_before_requesting_a_flight"
+        android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_sign_in_required"
@@ -41,10 +41,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="37dp"
         android:lineSpacingExtra="3sp"
-        android:textSize="15sp"
-        android:textColor="#161b37"
-        android:textStyle="normal"
         android:text="@string/username"
+        android:textColor="#161b37"
+        android:textSize="15sp"
+        android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@id/tv_sign_in_required"
         app:layout_constraintTop_toBottomOf="@id/tv_please_sign_in" />
 
@@ -74,10 +74,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:lineSpacingExtra="3sp"
+        android:text="Password"
         android:textColor="#161b37"
         android:textSize="15sp"
         android:textStyle="normal"
-        android:text="Password"
         app:layout_constraintStart_toStartOf="@id/tv_email"
         app:layout_constraintTop_toBottomOf="@id/et_email" />
 
@@ -117,20 +117,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_password" />
 
+    <RadioGroup
+        android:id="@+id/rg_user_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:checkedButton="@id/rb_admin"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tv_forgot_password">
+
+        <RadioButton
+            android:id="@+id/rb_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/admin"
+            android:textColor="@color/black" />
+
+        <RadioButton
+            android:id="@+id/rb_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/customer"
+            android:textColor="@color/black" />
+    </RadioGroup>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_sign_in"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginTop="30dp"
         android:lineSpacingExtra="4sp"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="normal"
-        android:text="@string/sign_in"
         app:layout_constraintEnd_toEndOf="@id/et_password"
         app:layout_constraintStart_toStartOf="@id/et_password"
-        app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
+        app:layout_constraintTop_toBottomOf="@id/rg_user_selection" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
