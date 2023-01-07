@@ -17,6 +17,7 @@ import com.project.carrental.data.local.models.Car
 import com.project.carrental.databinding.FragmentAvailableCarsBinding
 import com.project.carrental.presentation.AvailableCarsViewModelFactory
 import com.project.carrental.presentation.customer.CarAdapter
+import com.project.carrental.utils.createDatePicker
 import kotlinx.coroutines.launch
 
 class AvailableCarsFragment : Fragment() {
@@ -44,7 +45,15 @@ class AvailableCarsFragment : Fragment() {
             ViewModelProvider(this, factory)[AvailableCarsViewModel::class.java]
         adapter = CarAdapter(0) {
             if (it != null) {
-                createDatePickerDialog(it)
+                createDatePicker(this, it) { startDate, endDate ->
+                    availableCarsViewModel.viewModelScope.launch {
+                        availableCarsViewModel.updateCar(
+                            car = it,
+                            startDate = startDate,
+                            endDate = endDate
+                        )
+                    }
+                }
             }
         }
         binding.rvAvailableCars.adapter = adapter
@@ -70,6 +79,7 @@ class AvailableCarsFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         )
                             .show()
+                        adapter.notifyDataSetChanged()
                     }
                     is AvailableCarsViewModel.UIEvent.Error -> {
                         Toast.makeText(
