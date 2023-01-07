@@ -6,19 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.databinding.FragmentAdminCarsBinding
+import com.project.carrental.presentation.AdminCarsViewModelFactory
 import com.project.carrental.presentation.customer.CarAdapter
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class AdminCarsFragment : Fragment() {
 
-    private val viewModel: AdminCarsViewModel by viewModels()
+    private lateinit var viewModel: AdminCarsViewModel
     private val binding: FragmentAdminCarsBinding by lazy {
         FragmentAdminCarsBinding.inflate(layoutInflater)
     }
@@ -36,6 +35,9 @@ class AdminCarsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val factory = AdminCarsViewModelFactory(requireContext())
+        viewModel =
+            ViewModelProvider(this, factory)[AdminCarsViewModel::class.java]
         getCars()
         handleUiState()
     }

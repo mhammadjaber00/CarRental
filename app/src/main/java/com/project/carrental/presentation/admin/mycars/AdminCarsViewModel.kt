@@ -1,19 +1,19 @@
 package com.project.carrental.presentation.admin.mycars
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.domain.MainRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class AdminCarsViewModel @Inject constructor(
-    private val mainRepository: MainRepository
+class AdminCarsViewModel(
+    context: Context
 ) : ViewModel() {
+
+    private val mainRepository = MainRepository(context)
 
     private val _uiState = MutableStateFlow<UIState>(UIState.Nothing)
     val uiState = _uiState
@@ -28,7 +28,7 @@ class AdminCarsViewModel @Inject constructor(
     fun getCars() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = UIState.Loading(true)
-            _uiState.value = UIState.Success(mainRepository.getCar())
+            _uiState.value = UIState.Success(mainRepository.getAllCars())
         }
     }
 }

@@ -11,22 +11,19 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.databinding.FragmentAvailableCarsBinding
+import com.project.carrental.presentation.AvailableCarsViewModelFactory
 import com.project.carrental.presentation.customer.CarAdapter
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class AvailableCarsFragment : Fragment() {
 
     private var _binding: FragmentAvailableCarsBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val availableCarsViewModel: AvailableCarsViewModel by viewModels()
+    private lateinit var availableCarsViewModel: AvailableCarsViewModel
     private val binding get() = _binding!!
     private lateinit var adapter: CarAdapter
 
@@ -36,13 +33,15 @@ class AvailableCarsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAvailableCarsBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val factory = AvailableCarsViewModelFactory(requireContext())
+        availableCarsViewModel =
+            ViewModelProvider(this, factory)[AvailableCarsViewModel::class.java]
         adapter = CarAdapter(0) {
             if (it != null) {
                 createDatePickerDialog(it)

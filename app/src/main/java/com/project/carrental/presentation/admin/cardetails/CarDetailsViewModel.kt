@@ -1,15 +1,15 @@
 package com.project.carrental.presentation.admin.cardetails
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.domain.MainRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import javax.inject.Inject
 
-@HiltViewModel
-class CarDetailsViewModel @Inject constructor(private val mainRepository: MainRepository) :
+class CarDetailsViewModel(context: Context) :
     ViewModel() {
+
+    private val mainRepository = MainRepository(context)
 
     sealed class UIEvent {
         object Nothing : UIEvent()

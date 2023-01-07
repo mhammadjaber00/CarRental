@@ -12,24 +12,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.databinding.FragmentAddCarBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.project.carrental.presentation.CarDetailsViewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class CarDetailsFragment : Fragment() {
 
     private val binding: FragmentAddCarBinding by lazy {
         FragmentAddCarBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: CarDetailsViewModel by viewModels()
+    private lateinit var viewModel: CarDetailsViewModel
+
     private val car = MutableStateFlow<Car?>(null)
     private val result: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -39,7 +38,10 @@ class CarDetailsFragment : Fragment() {
         // Do something with the uris
         if (uris != null) {
             Log.d("PhotoPicker", "Selected URI: $uris")
-            context?.contentResolver?.takePersistableUriPermission(uris, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            context?.contentResolver?.takePersistableUriPermission(
+                uris,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
             result.value = uris.toString()
             binding.ivCarImage.setImageURI(uris)
         } else {
@@ -55,8 +57,11 @@ class CarDetailsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val factory = CarDetailsViewModelFactory(requireContext())
+        viewModel =
+            ViewModelProvider(this, factory)[CarDetailsViewModel::class.java]
         setUpListeners()
         fillData()
         handleUiState()
@@ -174,7 +179,7 @@ class CarDetailsFragment : Fragment() {
                         is CarDetailsViewModel.UIEvent.Success -> {
                             progressBar.visibility = View.GONE
                             Toast.makeText(
-                                requireContext(),
+                                activity?.applicationContext,
                                 "Car updated successfully",
                                 Toast.LENGTH_SHORT
                             )
@@ -184,7 +189,7 @@ class CarDetailsFragment : Fragment() {
                         is CarDetailsViewModel.UIEvent.Error -> {
                             progressBar.visibility = View.GONE
                             Toast.makeText(
-                                requireContext(),
+                                activity?.applicationContext,
                                 "Error updating car",
                                 Toast.LENGTH_SHORT
                             )

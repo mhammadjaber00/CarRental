@@ -1,15 +1,10 @@
 package com.project.carrental.data.local.models
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "user")
 data class Admin(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo val name: String,
-    @ColumnInfo val email: String,
-    @ColumnInfo val password: String,
-    @ColumnInfo val phone: String,
-    @ColumnInfo val listOfCars: List<Car>
+    val id: Int,
+    var name: String,
+    var email: String,
+    var password: String,
+    var phone: String,
+    var listOfCars: List<Car>
 )

@@ -8,10 +8,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.carrental.R
 import com.project.carrental.databinding.ActivityMainCustomerBinding
-import dagger.hilt.android.AndroidEntryPoint
 
 
-@AndroidEntryPoint
 class CustomerMainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainCustomerBinding

@@ -1,20 +1,18 @@
 package com.project.carrental.presentation.customer.mycars
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.domain.MainRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class MyCarsViewModel @Inject constructor(private val mainRepository: MainRepository) :
+class MyCarsViewModel(context: Context) :
     ViewModel() {
+
+    private val mainRepository = MainRepository(context)
 
     sealed class UIEvent {
         object Nothing : UIEvent()
@@ -32,7 +30,7 @@ class MyCarsViewModel @Inject constructor(private val mainRepository: MainReposi
         viewModelScope.launch(Dispatchers.IO) {
             _availableCarsState.value = UIEvent.Loading
             try {
-                _availableCarsState.value = UIEvent.Success(mainRepository.getCar())
+                _availableCarsState.value = UIEvent.Success(mainRepository.getAllCars())
 
             } catch (e: Exception) {
                 _availableCarsState.value = UIEvent.Error(e.message ?: "Error")

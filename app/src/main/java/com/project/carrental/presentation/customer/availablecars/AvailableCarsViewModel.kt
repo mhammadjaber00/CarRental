@@ -1,18 +1,18 @@
 package com.project.carrental.presentation.customer.availablecars
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.carrental.data.local.models.Car
 import com.project.carrental.domain.MainRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class AvailableCarsViewModel @Inject constructor(private val mainRepository: MainRepository) :
+class AvailableCarsViewModel(context: Context) :
     ViewModel() {
+
+    private val mainRepository = MainRepository(context)
 
     sealed class UIEvent {
         object Nothing : UIEvent()
@@ -34,7 +34,7 @@ class AvailableCarsViewModel @Inject constructor(private val mainRepository: Mai
         viewModelScope.launch(Dispatchers.IO) {
             _availableCarsState.value = UIEvent.Loading
             try {
-                _availableCarsState.value = UIEvent.Success(mainRepository.getCar())
+                _availableCarsState.value = UIEvent.Success(mainRepository.getAllCars())
 
             } catch (e: Exception) {
                 _availableCarsState.value = UIEvent.Error(e.message ?: "Error")
@@ -42,19 +42,21 @@ class AvailableCarsViewModel @Inject constructor(private val mainRepository: Mai
         }
     }
 
-    suspend fun updateCar(car: Car, startDate:String, endDate: String) {
+    suspend fun updateCar(car: Car, startDate: String, endDate: String) {
         _updateCarState.value = UIEvent.Loading
         try {
-            mainRepository.insertCar(Car(
-                car.id,
-                car.name,
-                car.price,
-                car.image,
-                car.color,
-                isRented = true,
-                startDate = startDate,
-                endDate = endDate
-            ))
+            mainRepository.updateCar(
+                Car(
+                    car.id,
+                    car.name,
+                    car.price,
+                    car.image,
+                    car.color,
+                    isRented = true,
+                    startDate = startDate,
+                    endDate = endDate
+                )
+            )
             _updateCarState.value = UIEvent.Edit(car)
         } catch (e: Exception) {
             _updateCarState.value = UIEvent.Error(e.message ?: "Error")
